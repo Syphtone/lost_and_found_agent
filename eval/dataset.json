@@ -1,0 +1,41 @@
+{
+  "description": "Evaluation cases for the Lost & Found agent. Run against the corpus seeded by scripts/seed.py. expected_decision is one of: matched | escalated | no_match.",
+  "cases": [
+    {
+      "id": "sony-headphones-strong",
+      "query": "I lost a black Sony headphone near the library yesterday",
+      "expected_decision": "matched",
+      "note": "Strong match: brand + color + type + location all agree with a seeded found report."
+    },
+    {
+      "id": "brown-wallet-strong",
+      "query": "I lost my brown leather wallet somewhere around the parking lot",
+      "expected_decision": "matched",
+      "note": "Strong match: distinctive item, color and location agree."
+    },
+    {
+      "id": "laptop-charger-strong",
+      "query": "I lost a silver laptop charger in one of the lecture halls",
+      "expected_decision": "matched",
+      "note": "Match to the silver MacBook charger in lecture hall B."
+    },
+    {
+      "id": "black-electronics-vague",
+      "query": "I think I lost some black electronics somewhere on campus",
+      "expected_decision": "escalated",
+      "note": "Ambiguous: vague item type, only color agrees; should be flagged for review."
+    },
+    {
+      "id": "white-earphones-ambiguous",
+      "query": "I lost a pair of white wireless earphones",
+      "expected_decision": "escalated",
+      "note": "Near-neighbour: white Apple earbuds exist but item wording and brand differ."
+    },
+    {
+      "id": "red-bicycle-no-match",
+      "query": "I lost my red bicycle near the sports complex",
+      "expected_decision": "no_match",
+      "note": "No similar item in the corpus; confidence should fall below the low threshold."
+    }
+  ]
+}

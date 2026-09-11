@@ -1,0 +1,139 @@
+/* Lost & Found Agent — campus-tech theme
+   Injected once by streamlit_app.py via st.markdown(unsafe_allow_html=True).
+   Class names are referenced by the components (match_card, evidence, trace,
+   status). Colors are defined explicitly so the look is stable regardless of
+   the viewer's Streamlit theme. */
+
+:root {
+    --lf-bg:        #f6f8fb;
+    --lf-surface:   #ffffff;
+    --lf-border:    #e3e8f0;
+    --lf-text:      #1f2733;
+    --lf-muted:     #64748b;
+    --lf-primary:   #2563eb;
+    --lf-primary-d: #1e40af;
+
+    --lf-high:      #16a34a;   /* high confidence  */
+    --lf-high-bg:   #ecfdf3;
+    --lf-mid:       #d97706;   /* possible / review */
+    --lf-mid-bg:    #fffbeb;
+    --lf-low:       #dc2626;   /* low / no match   */
+    --lf-low-bg:    #fef2f2;
+
+    --lf-radius:    14px;
+    --lf-shadow:    0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04);
+}
+
+/* ---- App shell ---- */
+.stApp { background: var(--lf-bg); }
+
+.block-container { padding-top: 2.2rem; max-width: 1100px; }
+
+/* ---- Brand / header ---- */
+.lf-brand {
+    display: flex; align-items: center; gap: .6rem;
+    font-weight: 700; font-size: 1.25rem; color: var(--lf-text);
+    letter-spacing: -.01em;
+}
+.lf-brand .lf-logo {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--lf-primary), var(--lf-primary-d));
+    display: grid; place-items: center; color: #fff; font-size: 1.05rem;
+}
+.lf-tagline { color: var(--lf-muted); font-size: .82rem; margin-top: .1rem; }
+
+/* ---- Generic card ---- */
+.lf-card {
+    background: var(--lf-surface);
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius);
+    box-shadow: var(--lf-shadow);
+    padding: 1rem 1.15rem;
+    margin-bottom: .85rem;
+}
+.lf-card h4 { margin: 0 0 .35rem 0; font-size: 1.02rem; color: var(--lf-text); }
+
+/* ---- Match card ---- */
+.lf-match {
+    border-left: 5px solid var(--lf-border);
+}
+.lf-match.conf-high { border-left-color: var(--lf-high); }
+.lf-match.conf-mid  { border-left-color: var(--lf-mid); }
+.lf-match.conf-low  { border-left-color: var(--lf-low); }
+
+.lf-match-desc { font-size: 1rem; font-weight: 600; color: var(--lf-text); margin-bottom: .5rem; }
+
+.lf-meta { display: flex; flex-wrap: wrap; gap: .4rem; margin: .4rem 0; }
+.lf-chip {
+    font-size: .74rem; color: var(--lf-muted);
+    background: #f1f5f9; border: 1px solid var(--lf-border);
+    border-radius: 999px; padding: .12rem .6rem;
+}
+.lf-chip b { color: var(--lf-text); font-weight: 600; }
+
+/* ---- Tier badges ---- */
+.lf-badge {
+    display: inline-block; font-size: .72rem; font-weight: 700;
+    letter-spacing: .03em; text-transform: uppercase;
+    padding: .2rem .55rem; border-radius: 8px;
+}
+.badge-high { color: var(--lf-high); background: var(--lf-high-bg); }
+.badge-mid  { color: var(--lf-mid);  background: var(--lf-mid-bg); }
+.badge-low  { color: var(--lf-low);  background: var(--lf-low-bg); }
+
+/* ---- Confidence meter ---- */
+.lf-meter-track {
+    height: 9px; border-radius: 999px; background: #e5eaf1; overflow: hidden;
+}
+.lf-meter-fill { height: 100%; border-radius: 999px; }
+.fill-high { background: var(--lf-high); }
+.fill-mid  { background: var(--lf-mid); }
+.fill-low  { background: var(--lf-low); }
+.lf-meter-label { font-size: .8rem; color: var(--lf-muted); margin-top: .25rem; }
+
+/* ---- Evidence lines ---- */
+.lf-evidence-item {
+    font-size: .85rem; color: var(--lf-text);
+    padding: .3rem 0; border-bottom: 1px dashed var(--lf-border);
+}
+.lf-evidence-item:last-child { border-bottom: none; }
+.lf-evidence-meta { font-size: .76rem; color: var(--lf-muted); }
+
+/* ---- Agent trace steps ---- */
+.lf-step {
+    display: flex; align-items: center; gap: .55rem;
+    padding: .35rem 0; font-size: .88rem; color: var(--lf-text);
+}
+.lf-step .tick { color: var(--lf-high); font-weight: 700; }
+.lf-step .dur  { margin-left: auto; color: var(--lf-muted); font-size: .78rem; }
+
+/* ---- Status indicators (sidebar) ---- */
+.lf-status-row {
+    display: flex; align-items: center; gap: .5rem;
+    font-size: .86rem; color: var(--lf-text); padding: .18rem 0;
+}
+.status-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+.dot-ok      { background: var(--lf-high); box-shadow: 0 0 0 3px var(--lf-high-bg); }
+.dot-bad     { background: var(--lf-low);  box-shadow: 0 0 0 3px var(--lf-low-bg); }
+.dot-unknown { background: var(--lf-muted); box-shadow: 0 0 0 3px #eef2f7; }
+.lf-status-sub { color: var(--lf-muted); font-size: .76rem; margin-left: auto; }
+
+/* ---- Escalation banner ---- */
+.lf-escalation {
+    background: var(--lf-mid-bg); border: 1px solid #f5d99a;
+    color: #92600a; border-radius: var(--lf-radius);
+    padding: .8rem 1rem; font-size: .9rem; font-weight: 500;
+}
+
+/* ---- No-match note ---- */
+.lf-nomatch {
+    background: var(--lf-low-bg); border: 1px solid #f6c9c9;
+    color: #a83232; border-radius: var(--lf-radius);
+    padding: .8rem 1rem; font-size: .9rem;
+}
+
+/* ---- Section heading ---- */
+.lf-section-title {
+    font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--lf-muted); margin: .2rem 0 .5rem;
+}

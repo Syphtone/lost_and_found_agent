@@ -1,5 +1,4 @@
-# lost_and_found_agent
-Agentic AI - powered Lost and Found Assistant
+# Lost \& Found Agent
 
 An agentic AI system that reunites people with lost items by understanding
 natural-language reports, semantically searching existing lost/found records,
@@ -281,3 +280,4 @@ low confidence → **escalated / flagged** in the response.
 score, and the final decision — demonstrating a real, inspectable agent run.
 
 ```
+
