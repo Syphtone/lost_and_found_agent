@@ -1,0 +1,262 @@
+[
+  {
+    "id": "item001",
+    "category": "headphones",
+    "brand": "Sony",
+    "color": "black",
+    "location": "library",
+    "found_time": "16:20",
+    "description": "Black Sony wireless noise-canceling headphones with carrying case",
+    "verification_feature": "small scratch on the left earcup"
+  },
+  {
+    "id": "item002",
+    "category": "headphones",
+    "brand": "Apple",
+    "color": "white",
+    "location": "classroom block",
+    "found_time": "14:10",
+    "description": "Apple AirPods Pro with wireless charging case",
+    "verification_feature": "engraved with initials J.D. on the back of the case"
+  },
+  {
+    "id": "item003",
+    "category": "headphones",
+    "brand": "Bose",
+    "color": "black",
+    "location": "cafeteria",
+    "found_time": "17:00",
+    "description": "Black Bluetooth earphones with silicone ear tips",
+    "verification_feature": "small crack on the right earbud"
+  },
+  {
+    "id": "item004",
+    "category": "wallet",
+    "brand": "Fossil",
+    "color": "brown",
+    "location": "library",
+    "found_time": "16:20",
+    "description": "Brown leather bi-fold wallet containing student ID card",
+    "verification_feature": "red sticker inside the cash compartment"
+  },
+  {
+    "id": "item005",
+    "category": "wallet",
+    "brand": "Generic",
+    "color": "black",
+    "location": "reading room",
+    "found_time": "15:45",
+    "description": "Black card holder with multiple card slots",
+    "verification_feature": "worn corner on the bottom left"
+  },
+  {
+    "id": "item006",
+    "category": "wallet",
+    "brand": "Generic",
+    "color": "blue",
+    "location": "cafeteria",
+    "found_time": "18:10",
+    "description": "Blue tri-fold wallet with coin pocket",
+    "verification_feature": "small ink stain on the inside flap"
+  },
+  {
+    "id": "item007",
+    "category": "phone",
+    "brand": "Apple",
+    "color": "black",
+    "location": "classroom block",
+    "found_time": "17:10",
+    "description": "Black iPhone with clear protective case",
+    "verification_feature": "crack on the top right corner of the screen"
+  },
+  {
+    "id": "item008",
+    "category": "phone",
+    "brand": "Samsung",
+    "color": "blue",
+    "location": "classroom 204",
+    "found_time": "14:30",
+    "description": "Blue Samsung Galaxy phone with blue case",
+    "verification_feature": "scratch on the back camera lens"
+  },
+  {
+    "id": "item009",
+    "category": "phone",
+    "brand": "Generic",
+    "color": "black",
+    "location": "computer lab",
+    "found_time": "11:15",
+    "description": "Black Android phone with black case",
+    "verification_feature": "dent on the bottom edge"
+  },
+  {
+    "id": "item010",
+    "category": "keys",
+    "brand": "Generic",
+    "color": "silver",
+    "location": "parking area",
+    "found_time": "13:20",
+    "description": "Keychain with 3 keys and car fob",
+    "verification_feature": "small red tag with phone number"
+  },
+  {
+    "id": "item011",
+    "category": "keys",
+    "brand": "Generic",
+    "color": "black",
+    "location": "main gate",
+    "found_time": "11:00",
+    "description": "Black keychain with 2 keys",
+    "verification_feature": "worn keychain with frayed fabric"
+  },
+  {
+    "id": "item012",
+    "category": "keys",
+    "brand": "Generic",
+    "color": "silver",
+    "location": "parking area",
+    "found_time": "16:45",
+    "description": "Car key with key ring and house key",
+    "verification_feature": "small scratch on the car key fob"
+  },
+  {
+    "id": "item013",
+    "category": "water bottle",
+    "brand": "Generic",
+    "color": "black",
+    "location": "library",
+    "found_time": "15:15",
+    "description": "Black stainless steel water bottle",
+    "verification_feature": "dent on the side near the bottom"
+  },
+  {
+    "id": "item014",
+    "category": "water bottle",
+    "brand": "Generic",
+    "color": "blue",
+    "location": "reading room",
+    "found_time": "10:30",
+    "description": "Blue plastic water bottle with straw",
+    "verification_feature": "sticker of a mountain on the side"
+  },
+  {
+    "id": "item015",
+    "category": "water bottle",
+    "brand": "Generic",
+    "color": "clear",
+    "location": "library entrance",
+    "found_time": "14:10",
+    "description": "Transparent water bottle with measurements",
+    "verification_feature": "small crack on the cap"
+  },
+  {
+    "id": "item016",
+    "category": "id card",
+    "brand": "Generic",
+    "color": "white",
+    "location": "student center",
+    "found_time": "12:00",
+    "description": "Campus student ID card with lanyard",
+    "verification_feature": "small scratch on the photo"
+  },
+  {
+    "id": "item017",
+    "category": "id card",
+    "brand": "Generic",
+    "color": "blue",
+    "location": "library lobby",
+    "found_time": "09:45",
+    "description": "Access card in blue lanyard",
+    "verification_feature": "worn lanyard with frayed edges"
+  },
+  {
+    "id": "item018",
+    "category": "id card",
+    "brand": "Generic",
+    "color": "white",
+    "location": "cafeteria",
+    "found_time": "15:30",
+    "description": "Membership ID card with clip",
+    "verification_feature": "bent corner on the bottom right"
+  },
+  {
+    "id": "item019",
+    "category": "watch",
+    "brand": "Generic",
+    "color": "silver",
+    "location": "gym locker room",
+    "found_time": "14:40",
+    "description": "Silver analog wristwatch with leather band",
+    "verification_feature": "scratch on the crystal face"
+  },
+  {
+    "id": "item020",
+    "category": "watch",
+    "brand": "Generic",
+    "color": "black",
+    "location": "sports complex",
+    "found_time": "11:30",
+    "description": "Black smartwatch with rubber band",
+    "verification_feature": "crack on the screen protector"
+  },
+  {
+    "id": "item021",
+    "category": "backpack",
+    "brand": "North Face",
+    "color": "blue",
+    "location": "engineering building",
+    "found_time": "17:45",
+    "description": "Dark blue North Face Recon backpack containing notebook and pens",
+    "verification_feature": "keychain shaped like a silver basketball attached to side zipper"
+  },
+  {
+    "id": "item022",
+    "category": "backpack",
+    "brand": "Generic",
+    "color": "black",
+    "location": "bus stop",
+    "found_time": "08:20",
+    "description": "Black canvas backpack with laptop compartment",
+    "verification_feature": "small tear on the front pocket"
+  },
+  {
+    "id": "item023",
+    "category": "laptop",
+    "brand": "Dell",
+    "color": "silver",
+    "location": "library 2nd floor",
+    "found_time": "18:00",
+    "description": "15-inch silver Dell XPS laptop with charger",
+    "verification_feature": "sticker of a green frog on the bottom case"
+  },
+  {
+    "id": "item024",
+    "category": "laptop",
+    "brand": "Apple",
+    "color": "grey",
+    "location": "study room b",
+    "found_time": "13:45",
+    "description": "Space grey MacBook Air with charger",
+    "verification_feature": "small dent on the bottom left corner"
+  },
+  {
+    "id": "item025",
+    "category": "umbrella",
+    "brand": "Generic",
+    "color": "black",
+    "location": "main entrance",
+    "found_time": "16:10",
+    "description": "Black compact umbrella with automatic open",
+    "verification_feature": "bent spoke on the canopy"
+  },
+  {
+    "id": "item026",
+    "category": "umbrella",
+    "brand": "Generic",
+    "color": "blue",
+    "location": "cafeteria patio",
+    "found_time": "17:30",
+    "description": "Blue foldable umbrella with handle",
+    "verification_feature": "small tear on the fabric near the tip"
+  }
+]
