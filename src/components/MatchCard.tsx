@@ -1,6 +1,6 @@
 import React from 'react';
 import type { MatchItem } from '../types/chat';
-import { MapPin, ShieldCheck, Tag, Calendar } from 'lucide-react';
+import { MapPin, ShieldCheck, ChevronRight } from 'lucide-react';
 
 interface MatchCardProps {
   match?: MatchItem;
@@ -14,42 +14,41 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, matches, onSelectMa
   if (itemList.length === 0) return null;
 
   return (
-    <div className="matches-list-container flex flex-col gap-2">
-      <div className="matches-header-label font-bold text-xs uppercase tracking-wider text-indigo-400 mb-1">
-        Potential Matches ({itemList.length})
-      </div>
+    <div className="matches-list-container">
       {itemList.map((item, idx) => (
         <div
           key={item.id || idx}
-          className={`compact-match-card ${onSelectMatch ? 'cursor-pointer hover:border-indigo-500 transition-all' : ''}`}
+          className={`compact-match-card ${onSelectMatch ? 'cursor-pointer' : ''}`}
           onClick={() => onSelectMatch && onSelectMatch(item)}
         >
-          <div className="card-top-bar">
-            <span className="potential-match-label">
-              {idx === 0 ? 'Top Match' : `Option #${idx + 1}`}
-            </span>
-            <div className={`status-pill-badge ${item.matchStrength.includes('Strong') ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' : ''}`}>
-              <ShieldCheck className="badge-icon-xs" />
-              <span>{item.statusText || item.matchStrength}</span>
-            </div>
-          </div>
-
-          <h3 className="card-item-title">{item.name}</h3>
-
-          <div className="card-meta-rows">
-            <div className="meta-row-item">
-              <MapPin className="meta-icon" />
-              <span>Found near: <strong>{item.location}</strong></span>
-            </div>
-            {item.foundDate && (
-              <div className="meta-row-item">
-                <Calendar className="meta-icon" />
-                <span>Found on: <strong>{item.foundDate}</strong></span>
+          <div className="match-card-content">
+            <div className="match-card-main">
+              <div className="match-item-info">
+                <h4 className="match-item-name">{item.name}</h4>
+                <div className="match-item-details">
+                  <span className="match-detail-item">
+                    <MapPin className="detail-icon" />
+                    {item.location}
+                  </span>
+                  {item.brand && (
+                    <span className="match-detail-item">
+                      {item.brand}
+                    </span>
+                  )}
+                  {item.color && (
+                    <span className="match-detail-item">
+                      {item.color}
+                    </span>
+                  )}
+                </div>
               </div>
-            )}
-            <div className="meta-row-item">
-              <Tag className="meta-icon" />
-              <span>Match Confidence: <strong>{item.matchStrength}</strong></span>
+              <div className="match-card-right">
+                <div className={`match-confidence ${item.matchStrength.includes('Strong') ? 'high' : 'medium'}`}>
+                  <ShieldCheck className="confidence-icon" />
+                  <span>{item.matchStrength}</span>
+                </div>
+                {onSelectMatch && <ChevronRight className="expand-icon" />}
+              </div>
             </div>
           </div>
         </div>

@@ -492,7 +492,7 @@ export const getMockResponse = (message: string, isVerificationStep: boolean = f
 
   return {
     response: `I found ${matches.length} potential match${matches.length > 1 ? 'es' : ''}. Can you describe one distinctive feature of your item to verify ownership?`,
-    stage: 'verification',
+    stage: 'verification_required',
     match: primaryMatch,
     matches: matches,
   };

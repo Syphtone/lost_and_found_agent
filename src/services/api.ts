@@ -7,7 +7,7 @@ export interface ApiConfig {
 }
 
 const DEFAULT_CONFIG: ApiConfig = {
-  isMockMode: false,
+  isMockMode: false, // Use live backend API
   backendUrl: 'http://localhost:8000/chat',
 };
 
@@ -31,7 +31,7 @@ class ApiService {
 
     if (!this.config.isMockMode) {
       try {
-        if (onStageUpdate) onStageUpdate('understanding');
+        if (onStageUpdate) onStageUpdate('searching');
         await delay(200);
         if (onStageUpdate) onStageUpdate('searching');
 
@@ -53,13 +53,13 @@ class ApiService {
         const data = await res.json();
 
         // Map backend stage to frontend AgentStage
-        let mappedStage: AgentStage = 'understanding';
+        let mappedStage: AgentStage = 'searching';
         if (data.stage === 'verification_required' || data.stage === 'verifying') {
-          mappedStage = 'verification';
+          mappedStage = 'verification_required';
         } else if (data.stage === 'verified' || data.stage === 'escalated') {
-          mappedStage = 'completed';
+          mappedStage = 'verified';
         } else if (data.stage === 'searching' || data.stage === 'need_more_information') {
-          mappedStage = 'matching';
+          mappedStage = 'matches_shown';
         }
 
         if (onStageUpdate) onStageUpdate(mappedStage);
@@ -92,17 +92,17 @@ class ApiService {
     }
 
     // Mock Mode Fallback
-    if (onStageUpdate) onStageUpdate('understanding');
+    if (onStageUpdate) onStageUpdate('searching');
     await delay(400);
 
     if (!isVerificationStep) {
       if (onStageUpdate) onStageUpdate('searching');
       await delay(600);
 
-      if (onStageUpdate) onStageUpdate('matching');
+      if (onStageUpdate) onStageUpdate('matches_shown');
       await delay(500);
 
-      if (onStageUpdate) onStageUpdate('verification');
+      if (onStageUpdate) onStageUpdate('verification_required');
 
       // Detect category from user message and get relevant matches
       const categoryKey = detectCategoryKey(request.message);
@@ -111,15 +111,15 @@ class ApiService {
 
       return {
         response: `I found ${matches.length} potential match${matches.length > 1 ? 'es' : ''}. Can you describe one distinctive feature of your item to verify ownership?`,
-        stage: 'verification',
+        stage: 'verification_required',
         match: primaryMatch,
         matches: matches,
       };
     } else {
-      if (onStageUpdate) onStageUpdate('verification');
+      if (onStageUpdate) onStageUpdate('verification_required');
       await delay(700);
 
-      if (onStageUpdate) onStageUpdate('completed');
+      if (onStageUpdate) onStageUpdate('verified');
 
       return {
         response: 'Your item has been successfully verified.',

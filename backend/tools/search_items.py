@@ -38,13 +38,13 @@ def search_items(
 ) -> List[Dict[str, Any]]:
     """
     Search database items matching extracted criteria.
-    Returns sanitized candidate items.
+    Returns sanitized candidate items that match the search criteria.
     """
     raw_items = load_items(filepath)
     if not raw_items:
         return []
 
-    # If no specific search parameters are provided, return all items sanitized
+    # Extract search criteria
     category = extracted_criteria.get("category", "") or ""
     brand = extracted_criteria.get("brand", "") or ""
     color = extracted_criteria.get("color", "") or ""
@@ -57,7 +57,50 @@ def search_items(
 
     candidates = []
     for item in raw_items:
-        sanitized = sanitize_item(item)
-        candidates.append(sanitized)
+        # Calculate match score for this item
+        match_score = 0
+        max_score = 0
+
+        # Category match (highest priority)
+        if category:
+            max_score += 3
+            item_category = item.get("category", "").lower().strip()
+            if category in item_category or item_category in category:
+                match_score += 3
+
+        # Brand match
+        if brand:
+            max_score += 2
+            item_brand = item.get("brand", "").lower().strip()
+            if brand in item_brand or item_brand in brand:
+                match_score += 2
+
+        # Color match
+        if color:
+            max_score += 2
+            item_color = item.get("color", "").lower().strip()
+            if color in item_color or item_color in color:
+                match_score += 2
+
+        # Location match
+        if location:
+            max_score += 2
+            item_location = item.get("location", "").lower().strip()
+            if location in item_location or item_location in location:
+                match_score += 2
+
+        # If no criteria provided, include all items with low score
+        if max_score == 0:
+            match_score = 1
+            max_score = 1
+
+        # Only include items that have at least some match
+        if match_score > 0:
+            sanitized = sanitize_item(item)
+            sanitized["match_score"] = match_score / max_score if max_score > 0 else 0
+            candidates.append(sanitized)
+
+    # Sort by match score (descending)
+    candidates.sort(key=lambda x: x.get("match_score", 0), reverse=True)
 
     return candidates

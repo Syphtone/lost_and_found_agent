@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Header } from './components/Header';
+import { Sidebar } from './components/Sidebar';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ChatWindow } from './components/ChatWindow';
 import { InputBox } from './components/InputBox';
@@ -14,11 +14,9 @@ export function App() {
   const [currentStage, setCurrentStage] = useState<AgentStage>('new');
   const [isSearching, setIsSearching] = useState(false);
   const [searchStatusText, setSearchStatusText] = useState('AI is searching...');
-  const [forceFailMode, setForceFailMode] = useState(false);
   const [sessionStatus, setSessionStatus] = useState<SessionStatus>('active');
   const [candidateMatches, setCandidateMatches] = useState<MatchItem[]>([]);
   const [selectedMatch, setSelectedMatch] = useState<MatchItem | null>(null);
-  const [verifiedItem, setVerifiedItem] = useState<MatchItem | null>(null);
 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -173,51 +171,25 @@ export function App() {
     setCurrentStage('verified');
     setIsSearching(false);
 
-    if (!forceFailMode) {
-      // Success verification flow - use the current selectedMatch
-      const match = selectedMatch;
+    // Success verification flow - use the current selectedMatch
+    const match = selectedMatch;
 
-      if (match) {
-        setVerifiedItem(match);
-        const successMessage: ChatMessage = {
-          id: `ai-res-${Date.now()}`,
-          sender: 'ai',
-          text: 'Your item has been successfully verified.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          stage: 'verified',
-          verificationResult: 'success',
-          match: match,
-          pickupLocation: match.pickupLocation || 'Library Security Desk',
-          pickupId: `PK-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-        };
-        setMessages((prev) => [...prev, successMessage]);
-        setCurrentStage('pickup_claim');
-        setSessionStatus('completed');
-      }
-    } else {
-      // Failed / Escalated verification flow
-      const failedMessage: ChatMessage = {
+    if (match) {
+      const successMessage: ChatMessage = {
         id: `ai-res-${Date.now()}`,
         sender: 'ai',
-        text: 'Verification could not be completed based on the provided feature.',
+        text: 'Your item has been successfully verified.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         stage: 'verified',
-        verificationResult: 'failed',
+        verificationResult: 'success',
+        match: match,
+        pickupLocation: match.pickupLocation || 'Library Security Desk',
+        pickupId: `PK-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
       };
-      setMessages((prev) => [...prev, failedMessage]);
-      setCurrentStage('completed');
+      setMessages((prev) => [...prev, successMessage]);
+      setCurrentStage('pickup_claim');
       setSessionStatus('completed');
     }
-  };
-
-  const handleReset = () => {
-    setMessages([]);
-    setCurrentStage('new');
-    setIsSearching(false);
-    setSessionStatus('active');
-    setCandidateMatches([]);
-    setSelectedMatch(null);
-    setVerifiedItem(null);
   };
 
   const handleStartNewSession = () => {
@@ -228,42 +200,39 @@ export function App() {
     setSessionStatus('active');
     setCandidateMatches([]);
     setSelectedMatch(null);
-    setVerifiedItem(null);
   };
 
   return (
-    <div className="app-root">
-      <Header
-        onReset={handleReset}
-        forceFailMode={forceFailMode}
-        onToggleForceFail={() => setForceFailMode((prev) => !prev)}
-      />
+    <div className="app-layout">
+      <Sidebar onNewChat={handleStartNewSession} currentStage={currentStage} />
 
-      {sessionStatus === 'ended' ? (
-        <SessionEnded onStartNewSession={handleStartNewSession} />
-      ) : (
-        <>
-          <ProgressIndicator currentStage={currentStage} />
+      <div className="main-content">
+        {sessionStatus === 'ended' ? (
+          <SessionEnded onStartNewSession={handleStartNewSession} />
+        ) : (
+          <>
+            <ProgressIndicator currentStage={currentStage} />
 
-          <ChatWindow
-            messages={messages}
-            isSearching={isSearching}
-            searchStatusText={searchStatusText}
-            onSelectSuggestion={handleSendMessage}
-            onVerificationSubmit={handleSendMessage}
-          />
+            <ChatWindow
+              messages={messages}
+              isSearching={isSearching}
+              searchStatusText={searchStatusText}
+              onSelectSuggestion={handleSendMessage}
+              onVerificationSubmit={handleSendMessage}
+            />
 
-          <InputBox
-            onSendMessage={handleSendMessage}
-            disabled={isSearching || sessionStatus === 'completed'}
-            placeholderText={
-              isWaitingVerification
-                ? 'Describe a distinctive feature (e.g. "Scratch on left earcup")...'
-                : 'I lost my black Sony headphones near the library...'
-            }
-          />
-        </>
-      )}
+            <InputBox
+              onSendMessage={handleSendMessage}
+              disabled={isSearching || sessionStatus === 'completed'}
+              placeholderText={
+                isWaitingVerification
+                  ? 'Describe a distinctive feature (e.g. "Scratch on left earcup")...'
+                  : 'Describe the item you lost...'
+              }
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }

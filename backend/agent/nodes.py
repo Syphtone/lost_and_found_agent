@@ -72,38 +72,62 @@ def llm_extract(message: str) -> Dict[str, Any]:
         from langchain_core.messages import SystemMessage, HumanMessage
 
         llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model="gemini-pro",
             google_api_key=api_key,
             temperature=0
         )
 
-        sys_prompt = """Extract lost item details from user message into a JSON object with keys:
-"intent": "LOST_ITEM" or "GENERAL_QUERY",
-"category": string or null,
-"brand": string or null,
-"color": string or null,
-"location": string or null,
-"time": string or null,
-"distinctive_feature": string or null
+        sys_prompt = """You are a lost and found item extraction specialist. Extract structured information from the user's message about a lost item.
 
-Return ONLY raw JSON, no markdown formatting."""
+Extract the following fields into a JSON object:
+- "intent": "LOST_ITEM" if the user is reporting a lost item, "GENERAL_QUERY" otherwise
+- "category": The type of item (e.g., "wallet", "phone", "headphones", "keys", "water bottle", "backpack", "laptop", "watch", "id card", "umbrella") or null if not mentioned
+- "brand": The brand name if mentioned (e.g., "Apple", "Samsung", "Sony", "Fossil", "North Face", "Dell") or null
+- "color": The color if mentioned (e.g., "black", "brown", "blue", "white", "silver", "red") or null
+- "location": The location where the item was lost (e.g., "library", "classroom", "cafeteria", "gym", "parking area") or null
+- "time": Time information if mentioned (e.g., "yesterday", "4 PM", "morning", "afternoon") or null
+- "distinctive_feature": Any distinctive features mentioned (e.g., "leather", "with case", "scratched") or null
+
+IMPORTANT: Return ONLY valid JSON, no markdown formatting, no additional text."""
 
         response = llm.invoke([
             SystemMessage(content=sys_prompt),
             HumanMessage(content=message)
         ])
 
-        text = response.content.strip()
+        # Handle different response formats
+        content = response.content
+        if isinstance(content, list):
+            # If response is a list, join the parts
+            text = "".join([str(part) for part in content])
+        else:
+            text = str(content)
+
+        text = text.strip()
+        # Clean up any markdown formatting
         if text.startswith("```json"):
             text = text[7:]
+        if text.startswith("```"):
+            text = text[3:]
         if text.endswith("```"):
             text = text[:-3]
         text = text.strip()
 
         data = json.loads(text)
-        return data
+        
+        # Ensure all expected keys exist
+        return {
+            "intent": data.get("intent", "LOST_ITEM"),
+            "category": data.get("category"),
+            "brand": data.get("brand"),
+            "color": data.get("color"),
+            "location": data.get("location"),
+            "time": data.get("time"),
+            "distinctive_feature": data.get("distinctive_feature")
+        }
     except Exception as e:
         # Fallback if LLM fails
+        print(f"LLM extraction failed: {e}, falling back to rule-based extraction")
         return rule_based_extract(message)
 
 
